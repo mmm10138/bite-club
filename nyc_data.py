@@ -36,3 +36,15 @@ def clean(row):
         "latitude": row.get("latitude"),
         "longitude": row.get("longitude"),
     }
+def get_restaurant(camis):
+    params = {
+        "camis": camis,
+        "$order": "inspection_date DESC",
+        "$limit": 1,
+    }
+    response = requests.get(BASE_URL, params=params, timeout=10)
+    response.raise_for_status()
+    rows = response.json()
+    if not rows:
+        return None
+    return clean(rows[0])

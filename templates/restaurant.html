@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>{{ restaurant.name }} — Bite Club</title>
+</head>
+<body>
+  <a href="/">← Back to search</a>
+
+  <h1>{{ restaurant.name }}</h1>
+  <p>{{ restaurant.cuisine }}</p>
+  <p>{{ restaurant.address }}, {{ restaurant.boro }} {{ restaurant.zipcode }}</p>
+  <p>Health grade: {{ restaurant.grade if restaurant.grade else "Not graded" }}</p>
+</body>
+</html>
