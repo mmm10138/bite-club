@@ -450,3 +450,34 @@ h2 {
   color: var(--green-700);
   padding: 5px 10px;
 }
+
+/* ---------- grade legend ---------- */
+
+.legend {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  flex-wrap: wrap;
+  padding: 18px var(--pad) 0;
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--green-500);
+}
+
+.legend-title {
+  font-family: "Anton", sans-serif;
+  font-size: 13px;
+  color: var(--green-900);
+}
+
+.legend-item b {
+  display: inline-block;
+  font-family: "Anton", sans-serif;
+  background: var(--green-900);
+  color: var(--cream);
+  padding: 3px 8px 1px;
+  margin-right: 6px;
+}
+
+.legend-none { color: var(--green-300); }

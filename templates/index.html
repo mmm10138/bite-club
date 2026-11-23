@@ -28,6 +28,13 @@
     <input type="text" name="term" value="{{ term }}" placeholder="What are we eating?">
     <button type="submit">Let's eat</button>
   </form>
+  <div class="legend">
+    <span class="legend-title">City health grades</span>
+    <span class="legend-item"><b>A</b> 0&ndash;13 points</span>
+    <span class="legend-item"><b>B</b> 14&ndash;27 points</span>
+    <span class="legend-item"><b>C</b> 28+ points</span>
+    <span class="legend-item legend-none">No badge &mdash; inspected, grade not yet issued</span>
+  </div>
 
   {% if restaurants %}
     <div class="grid">
@@ -35,7 +42,7 @@
         <a class="card" href="/restaurant/{{ r.id }}">
           <div class="card-tile tile-{{ r.tile }}">
             <span class="card-initials">{{ r.initials }}</span>
-            {% if r.is_graded %}<span class="card-grade">{{ r.grade }}</span>{% endif %}
+            {% if r.is_graded %}<span class="card-grade" title="City health grade {{ r.grade }}">{{ r.grade }}</span>{% endif %}
           </div>
           <div class="card-body">
             <h3>{{ r.name }}</h3>
