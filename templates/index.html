@@ -2,22 +2,57 @@
 <html>
 <head>
   <title>Bite Club</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-  <h1>Bite Club</h1>
+
+  <header class="awning">
+    <h1>Bite Club</h1>
+    <p class="tagline">The first rule of Bite Club: you talk about Bite Club</p>
+  </header>
+
+  <!-- Scrolling strip. The track holds the text twice, so when the
+       animation shifts it left by half its width the second copy lands
+       exactly where the first started. No visible jump. -->
+  <div class="marquee">
+    <div class="marquee-track">
+      <span>Rule 1 &mdash; you talk about Bite Club &nbsp;&bull;&nbsp; Rule 2 &mdash; you rate food, atmosphere and service &nbsp;&bull;&nbsp; Rule 3 &mdash; the city grades the kitchen, you grade the rest &nbsp;&bull;&nbsp; Rule 4 &mdash; if it&rsquo;s your first night, you have to write a review &nbsp;&bull;&nbsp;</span>
+      <span>Rule 1 &mdash; you talk about Bite Club &nbsp;&bull;&nbsp; Rule 2 &mdash; you rate food, atmosphere and service &nbsp;&bull;&nbsp; Rule 3 &mdash; the city grades the kitchen, you grade the rest &nbsp;&bull;&nbsp; Rule 4 &mdash; if it&rsquo;s your first night, you have to write a review &nbsp;&bull;&nbsp;</span>
+    </div>
+  </div>
 
   <form method="get" action="/">
-    <input type="text" name="term" value="{{ term }}" placeholder="tacos, ramen, pizza">
-    <button type="submit">Search</button>
+    <input type="text" name="term" value="{{ term }}" placeholder="What are we eating?">
+    <button type="submit">Let's eat</button>
   </form>
 
-  <ul>
-    {% for r in restaurants %}
-      <li>
-        <a href="/restaurant/{{ r.id }}">{{ r.name }}</a>
-        — {{ r.cuisine }} — {{ r.address }}
-      </li>
-    {% endfor %}
-  </ul>
+  {% if restaurants %}
+    <div class="grid">
+      {% for r in restaurants %}
+        <a class="card" href="/restaurant/{{ r.id }}">
+          <div class="card-tile tile-{{ r.tile }}">
+            <span class="card-initials">{{ r.initials }}</span>
+            {% if r.is_graded %}<span class="card-grade">{{ r.grade }}</span>{% endif %}
+          </div>
+          <div class="card-body">
+            <h3>{{ r.name }}</h3>
+            <p class="card-cuisine">{{ r.cuisine }}</p>
+            <p class="card-address">{{ r.address }}</p>
+          </div>
+          <span class="card-arrow">&rarr;</span>
+        </a>
+      {% endfor %}
+    </div>
+  {% else %}
+    <p class="notice">
+      No restaurants came back. Either nothing matched
+      {% if term %}&ldquo;{{ term }}&rdquo;{% endif %},
+      or the city&rsquo;s data service is busy. Try again in a moment.
+    </p>
+  {% endif %}
+
 </body>
 </html>

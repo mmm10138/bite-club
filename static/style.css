@@ -1,0 +1,452 @@
+/* Bite Club — bodega awning
+   Deep green signage, cream, heavy condensed type, hard edges.
+   Full-bleed layout: bands run edge to edge, content has side padding. */
+
+:root {
+  --green-900: #0E3326;   /* darkest, the awning itself */
+  --green-700: #17563C;
+  --green-500: #2B7A54;
+  --green-300: #7FA891;
+  --cream:     #F6F1DF;   /* the light tone, slightly yellow, not white */
+  --cream-dk:  #E8E0C6;
+  --ink:       #11271D;
+  --pad:       40px;      /* side padding, used everywhere */
+}
+
+* { box-sizing: border-box; }
+
+body {
+  background: var(--cream);
+  color: var(--ink);
+  font-family: "Archivo", sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+  margin: 0;
+  padding: 0 0 90px;      /* no max-width: the page fills the screen */
+}
+
+/* ---------- the awning ---------- */
+
+.awning {
+  background: var(--green-900);
+  color: var(--cream);
+  padding: 40px var(--pad) 30px;
+  position: relative;
+  text-align: center;
+}
+
+.awning h1 {
+  font-family: "Anton", sans-serif;
+  font-size: clamp(42px, 9vw, 96px);   /* scales with screen width */
+  line-height: 0.92;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+  margin: 0;
+}
+
+.tagline {
+  font-size: 13px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--green-300);
+  margin: 12px 0 0;
+}
+
+.back {
+  display: inline-block;
+  color: var(--green-300);
+  text-decoration: none;
+  font-size: 12px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+}
+
+.back:hover { color: var(--cream); }
+
+/* ---------- marquee ---------- */
+
+.marquee {
+  background: var(--green-500);
+  color: var(--cream);
+  overflow: hidden;
+  padding: 10px 0;
+  margin-top: 0;        /* clears the valance */
+  white-space: nowrap;
+}
+
+.marquee-track {
+  display: inline-block;
+  animation: scroll 30s linear infinite;
+  font-family: "Anton", sans-serif;
+  font-size: 15px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+/* -50% lands the second copy exactly where the first started */
+@keyframes scroll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+.marquee:hover .marquee-track { animation-play-state: paused; }
+
+/* ---------- search ---------- */
+
+form {
+  display: flex;
+  padding: 40px var(--pad) 0;
+}
+
+form input[type="text"] {
+  flex: 1;
+  font: inherit;
+  font-size: 18px;
+  padding: 16px 18px;
+  border: 3px solid var(--green-900);
+  border-right: none;
+  background: #fff;
+  color: var(--ink);
+}
+
+form input[type="text"]::placeholder { color: #A39E8C; }
+form input[type="text"]:focus { outline: none; background: #FFFDF5; }
+
+button {
+  font-family: "Anton", sans-serif;
+  font-size: 18px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 16px 34px;
+  border: 3px solid var(--green-900);
+  background: var(--green-900);
+  color: var(--cream);
+  cursor: pointer;
+}
+
+button:hover { background: var(--green-700); border-color: var(--green-700); }
+
+/* ---------- section headings ---------- */
+
+h2 {
+  font-family: "Anton", sans-serif;
+  font-size: 24px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--green-900);
+  margin: 54px 0 0;
+  padding: 0 var(--pad) 12px;
+  border-bottom: 4px solid var(--green-900);
+}
+
+/* ---------- card grid ---------- */
+
+.grid {
+  display: grid;
+  /* As many columns as fit at 250px minimum. No media queries needed. */
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 16px;
+  padding: 32px var(--pad) 0;
+}
+
+.card {
+  display: block;
+  position: relative;
+  background: #fff;
+  border: 3px solid var(--green-900);
+  text-decoration: none;
+  overflow: hidden;
+  /* Only transform and box-shadow are animated. Animating size or
+     colour forces a layout recalculation and stutters. */
+  transition: transform .14s ease, box-shadow .14s ease;
+}
+
+.card:hover {
+  transform: translate(-4px, -4px);
+  box-shadow: 8px 8px 0 var(--green-900);   /* hard shadow, no blur */
+}
+
+.card-tile {
+  height: 104px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 18px;
+}
+
+.card-initials {
+  font-family: "Anton", sans-serif;
+  font-size: 50px;
+  line-height: 1;
+  color: rgba(246, 241, 223, .92);
+}
+
+.card-grade {
+  font-family: "Anton", sans-serif;
+  font-size: 22px;
+  background: var(--cream);
+  color: var(--green-900);
+  padding: 6px 12px 4px;
+}
+
+.card-body { padding: 15px 18px 18px; }
+
+.card-body h3 {
+  font-family: "Anton", sans-serif;
+  font-size: 20px;
+  line-height: 1.1;
+  text-transform: uppercase;
+  color: var(--green-900);
+  margin: 0 0 6px;
+}
+
+.card-cuisine {
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--green-500);
+  margin: 0 0 5px;
+}
+
+.card-address {
+  font-size: 13px;
+  color: var(--green-300);
+  margin: 0;
+}
+
+/* Arrow waits off the right edge, slides in on hover */
+.card-arrow {
+  position: absolute;
+  right: -28px;
+  bottom: 15px;
+  font-size: 22px;
+  color: var(--green-900);
+  transition: right .14s ease;
+}
+
+.card:hover .card-arrow { right: 18px; }
+
+/* ---------- eight cuisine tones ---------- */
+
+.tile-0 { background: #0E3326; }
+.tile-1 { background: #17563C; }
+.tile-2 { background: #2B7A54; }
+.tile-3 { background: #3F6B4A; }
+.tile-4 { background: #1F4D3F; }
+.tile-5 { background: #35664E; }
+.tile-6 { background: #22603A; }
+.tile-7 { background: #4A7A5E; }
+
+/* ---------- restaurant detail ---------- */
+
+.detail-top {
+  padding: 34px var(--pad) 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 28px;
+  flex-wrap: wrap;
+}
+
+.addr { font-size: 16px; color: var(--green-700); margin: 0 0 4px; }
+
+/* Grade placard, like the ones taped in restaurant windows */
+.placard {
+  background: var(--green-900);
+  color: var(--cream);
+  padding: 16px 26px 18px;
+  text-align: center;
+  min-width: 140px;
+}
+
+.placard-label,
+.placard-score {
+  display: block;
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--green-300);
+}
+
+.placard-grade {
+  display: block;
+  font-family: "Anton", sans-serif;
+  font-size: 72px;
+  line-height: 0.9;
+  margin: 5px 0;
+}
+
+/* ---------- rating blocks ---------- */
+
+.ratings {
+  padding: 28px var(--pad) 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 4px;
+}
+
+.rating {
+  background: var(--green-900);
+  color: var(--cream);
+  padding: 26px 18px;
+  text-align: center;
+}
+
+/* Alternate tones so the row reads as four blocks, not one bar */
+.rating:nth-child(even) { background: var(--green-700); }
+
+.num {
+  display: block;
+  font-family: "Anton", sans-serif;
+  font-size: 56px;
+  line-height: 1;
+}
+
+.label {
+  display: block;
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--green-300);
+  margin-top: 8px;
+}
+
+.count-line,
+.notice {
+  padding: 14px var(--pad) 0;
+  font-size: 13px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--green-500);
+  margin: 0;
+}
+
+/* ---------- review form ---------- */
+
+.review-form {
+  display: block;
+  margin: 28px var(--pad) 0;
+  padding: 28px;
+  background: #fff;
+  border: 3px solid var(--green-900);
+}
+
+.field { display: block; margin-bottom: 18px; }
+
+.field > span,
+.score > span,
+.check > span {
+  display: block;
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--green-500);
+  margin-bottom: 7px;
+}
+
+.field input,
+.field textarea {
+  width: 100%;
+  font: inherit;
+  padding: 12px 14px;
+  border: 2px solid var(--cream-dk);
+  background: var(--cream);
+  color: var(--ink);
+}
+
+.field input:focus,
+.field textarea:focus,
+.score input:focus {
+  outline: none;
+  border-color: var(--green-900);
+  background: #fff;
+}
+
+.scores {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 12px;
+  margin-bottom: 18px;
+}
+
+.score input {
+  width: 100%;
+  font-family: "Anton", sans-serif;
+  font-size: 30px;
+  text-align: center;
+  padding: 10px;
+  border: 2px solid var(--cream-dk);
+  background: var(--cream);
+  color: var(--green-900);
+}
+
+.two-up {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+}
+
+.check {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 18px;
+}
+
+.check span { margin: 0; }
+.check input { width: 19px; height: 19px; accent-color: var(--green-900); }
+
+/* ---------- review cards ---------- */
+
+.review {
+  margin: 0 var(--pad) 12px;
+  background: #fff;
+  border: 3px solid var(--green-900);
+  padding: 20px 22px;
+}
+
+.review:first-of-type { margin-top: 28px; }
+
+.review-head {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  margin-bottom: 10px;
+}
+
+.review-name {
+  font-family: "Anton", sans-serif;
+  font-size: 21px;
+  text-transform: uppercase;
+  color: var(--green-900);
+}
+
+.review-score {
+  font-family: "Anton", sans-serif;
+  font-size: 15px;
+  background: var(--green-900);
+  color: var(--cream);
+  padding: 4px 10px 2px;
+}
+
+.review-body { font-size: 17px; color: var(--ink); margin: 0 0 12px; }
+
+.review-detail {
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--green-300);
+  margin: 0 0 12px;
+}
+
+.review-bars { display: flex; gap: 7px; flex-wrap: wrap; }
+
+.review-bars span {
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  background: var(--cream-dk);
+  color: var(--green-700);
+  padding: 5px 10px;
+}

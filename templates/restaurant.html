@@ -2,65 +2,105 @@
 <html>
 <head>
   <title>{{ restaurant.name }} — Bite Club</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-  <a href="/">← Back to search</a>
 
-  <h1>{{ restaurant.name }}</h1>
-  <p>{{ restaurant.cuisine }}</p>
-  <p>{{ restaurant.address }}, {{ restaurant.boro }} {{ restaurant.zipcode }}</p>
-  <p>Health grade: {{ restaurant.grade if restaurant.grade else "Not graded" }}</p>
+  <header class="awning">
+    <a class="back" href="/">← All restaurants</a>
+    <h1>{{ restaurant.name }}</h1>
+    <p class="tagline">{{ restaurant.cuisine }} &middot; {{ restaurant.boro }}</p>
+  </header>
 
-  <h2>Bite Club ratings</h2>
+  <div class="marquee">
+    <div class="marquee-track">
+      <span>{{ restaurant.name }} &nbsp;&bull;&nbsp; {{ restaurant.cuisine }} &nbsp;&bull;&nbsp; {{ restaurant.address }} &nbsp;&bull;&nbsp;</span>
+      <span>{{ restaurant.name }} &nbsp;&bull;&nbsp; {{ restaurant.cuisine }} &nbsp;&bull;&nbsp; {{ restaurant.address }} &nbsp;&bull;&nbsp;</span>
+    </div>
+  </div>
+
+  <div class="detail-top">
+    <div class="detail-info">
+      <p class="addr">{{ restaurant.address }}</p>
+      <p class="addr">{{ restaurant.boro }} {{ restaurant.zipcode }}</p>
+      {% if restaurant.phone %}<p class="addr">{{ restaurant.phone }}</p>{% endif %}
+    </div>
+
+    <div class="placard">
+       <span class="placard-label">The city&rsquo;s verdict</span>
+      {% if restaurant.is_graded %}
+        <span class="placard-grade">{{ restaurant.grade }}</span>
+        {% if restaurant.score %}<span class="placard-score">score {{ restaurant.score }}</span>{% endif %}
+      {% else %}
+        <span class="placard-grade">&mdash;</span>
+        <span class="placard-score">{{ restaurant.grade_label if restaurant.grade_label else "No grade on file" }}</span>
+      {% endif %}
+    </div>
+  </div>
+
+  <h2>what the club says</h2>
   {% if averages.count > 0 %}
-    <ul>
-      <li>Food: {{ "%.1f"|format(averages.food) }}</li>
-      <li>Atmosphere: {{ "%.1f"|format(averages.atmosphere) }}</li>
-      <li>Service: {{ "%.1f"|format(averages.service) }}</li>
-      <li>Overall: {{ "%.1f"|format(averages.overall) }}</li>
-    </ul>
-    <p>From {{ averages.count }} review{{ "" if averages.count == 1 else "s" }}</p>
+    <div class="ratings">
+      <div class="rating"><span class="num">{{ "%.1f"|format(averages.food) }}</span><span class="label">Food</span></div>
+      <div class="rating"><span class="num">{{ "%.1f"|format(averages.atmosphere) }}</span><span class="label">Atmosphere</span></div>
+      <div class="rating"><span class="num">{{ "%.1f"|format(averages.service) }}</span><span class="label">Service</span></div>
+      <div class="rating"><span class="num">{{ "%.1f"|format(averages.overall) }}</span><span class="label">Overall</span></div>
+    </div>
+    <p class="count-line">From {{ averages.count }} review{{ "" if averages.count == 1 else "s" }}</p>
   {% else %}
-    <p>No reviews yet.</p>
+     <p class="notice">Nobody&rsquo;s talked about this place yet. Rule 1 applies.</p>
   {% endif %}
 
-  <h2>Write a review</h2>
-  <form method="post" action="/restaurant/{{ restaurant.id }}/review">
-    <p>
-      Your name:
+  <h2>Say your piece</h2>
+  <form class="review-form" method="post" action="/restaurant/{{ restaurant.id }}/review">
+    <label class="field">
+        <span>Who&rsquo;s asking</span>
       <input type="text" name="username" required>
-    </p>
-    <p>
-      Food: <input type="number" name="food" min="1" max="5" value="5" required>
-      Atmosphere: <input type="number" name="atmosphere" min="1" max="5" value="5" required>
-      Service: <input type="number" name="service" min="1" max="5" value="5" required>
-      Overall: <input type="number" name="overall" min="1" max="5" value="5" required>
-    </p>
-    <p>
-      What did you order?
-      <input type="text" name="ordered">
-    </p>
-    <p>
-      When did you go?
-      <input type="date" name="visit_date">
-    </p>
-    <p>
-      <label><input type="checkbox" name="would_return" checked> Would return</label>
-    </p>
-    <p>
-      <textarea name="body" rows="3" placeholder="How was it?" required></textarea>
-    </p>
-    <button type="submit">Post review</button>
+    </label>
+
+    <div class="scores">
+      <label class="score"><span>Food</span><input type="number" name="food" min="1" max="5" value="5" required></label>
+      <label class="score"><span>Atmosphere</span><input type="number" name="atmosphere" min="1" max="5" value="5" required></label>
+      <label class="score"><span>Service</span><input type="number" name="service" min="1" max="5" value="5" required></label>
+      <label class="score"><span>Overall</span><input type="number" name="overall" min="1" max="5" value="5" required></label>
+    </div>
+
+    <div class="two-up">
+      <label class="field"><span>What did you order?</span><input type="text" name="ordered"></label>
+      <label class="field"><span>When did you go?</span><input type="date" name="visit_date"></label>
+    </div>
+
+    <label class="check"><input type="checkbox" name="would_return" checked> <span>I&rsquo;d go back</span></label>
+
+    <label class="field"><span>The verdict</span><textarea name="body" rows="3" placeholder="What did you eat, and would you send a friend?" required></textarea></label>
+    <button type="submit">Talk about it</button>
   </form>
 
-  <h2>Reviews</h2>
+  <h2>The talk</h2>
   {% for review in reviews %}
-    <div>
-      <p><strong>{{ review.username }}</strong> — overall {{ review.overall }}/5</p>
-      <p>{{ review.body }}</p>
-      {% if review.ordered %}<p>Ordered: {{ review.ordered }}</p>{% endif %}
-      <p>Would return: {{ "Yes" if review.would_return else "No" }}</p>
+    <div class="review">
+      <div class="review-head">
+        <span class="review-name">{{ review.username }}</span>
+        <span class="review-score">{{ review.overall }}/5</span>
+      </div>
+      <p class="review-body">{{ review.body }}</p>
+      <p class="review-detail">
+        {% if review.ordered %}Ordered: {{ review.ordered }} &nbsp;&bull;&nbsp; {% endif %}
+        {{ "Would return" if review.would_return else "Would not return" }}
+        {% if review.visit_date %} &nbsp;&bull;&nbsp; Visited {{ review.visit_date }}{% endif %}
+      </p>
+      <div class="review-bars">
+        <span>Food {{ review.food }}</span>
+        <span>Atmos {{ review.atmosphere }}</span>
+        <span>Service {{ review.service }}</span>
+      </div>
     </div>
+  {% else %}
+        <p class="notice">Silence so far. Break it.</p>
   {% endfor %}
+
 </body>
 </html>

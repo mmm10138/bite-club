@@ -58,19 +58,7 @@ def add_review(camis):
     ratings = {}
     for field in ("food", "atmosphere", "service", "overall"):
         try:
-            value =         (
-            camis,
-            username,
-            ratings["food"],
-            ratings["atmosphere"],
-            ratings["service"],
-            ratings["overall"],
-            request.form.get("ordered", ""),
-            1 if request.form.get("would_return") else 0,
-            visit_date,
-            body,
-            datetime.now().isoformat(timespec="seconds"),
-        ),
+            value = int(request.form[field])
         except (KeyError, ValueError):
             return f"Missing or invalid {field} rating.", 400
         if value < 1 or value > 5:
