@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Bite Club</title>
+</head>
+<body>
+  <h1>Bite Club</h1>
+  <ul>
+    {% for r in restaurants %}
+      <li>{{ r.name }} — {{ r.cuisine }} — {{ r.address }}</li>
+    {% endfor %}
+  </ul>
+</body>
+</html>
