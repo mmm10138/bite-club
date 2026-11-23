@@ -5,8 +5,17 @@ from flask import Flask, render_template, request, redirect, url_for
 import nyc_data
 import sqlite3 #sqlite3 is a library that allows us to use a database in our app
 from datetime import datetime #datetime is a library that allows us to work with dates and times
+from database import init_db
+from seed import seed_if_empty
+
 
 app = Flask(__name__) #Create app 
+# Run on import, not just under __main__, because gunicorn imports the
+# app rather than executing the file. On Render the filesystem is wiped
+# on every restart, so both of these need to run each boot.
+init_db()
+seed_if_empty()
+
 DATABASE="bite_club.db" #Database file name
 
 def get_db():
