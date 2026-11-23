@@ -10,5 +10,57 @@
   <p>{{ restaurant.cuisine }}</p>
   <p>{{ restaurant.address }}, {{ restaurant.boro }} {{ restaurant.zipcode }}</p>
   <p>Health grade: {{ restaurant.grade if restaurant.grade else "Not graded" }}</p>
+
+  <h2>Bite Club ratings</h2>
+  {% if averages.count > 0 %}
+    <ul>
+      <li>Food: {{ "%.1f"|format(averages.food) }}</li>
+      <li>Atmosphere: {{ "%.1f"|format(averages.atmosphere) }}</li>
+      <li>Service: {{ "%.1f"|format(averages.service) }}</li>
+      <li>Overall: {{ "%.1f"|format(averages.overall) }}</li>
+    </ul>
+    <p>From {{ averages.count }} review{{ "" if averages.count == 1 else "s" }}</p>
+  {% else %}
+    <p>No reviews yet.</p>
+  {% endif %}
+
+  <h2>Write a review</h2>
+  <form method="post" action="/restaurant/{{ restaurant.id }}/review">
+    <p>
+      Your name:
+      <input type="text" name="username" required>
+    </p>
+    <p>
+      Food: <input type="number" name="food" min="1" max="5" value="5" required>
+      Atmosphere: <input type="number" name="atmosphere" min="1" max="5" value="5" required>
+      Service: <input type="number" name="service" min="1" max="5" value="5" required>
+      Overall: <input type="number" name="overall" min="1" max="5" value="5" required>
+    </p>
+    <p>
+      What did you order?
+      <input type="text" name="ordered">
+    </p>
+    <p>
+      When did you go?
+      <input type="date" name="visit_date">
+    </p>
+    <p>
+      <label><input type="checkbox" name="would_return" checked> Would return</label>
+    </p>
+    <p>
+      <textarea name="body" rows="3" placeholder="How was it?" required></textarea>
+    </p>
+    <button type="submit">Post review</button>
+  </form>
+
+  <h2>Reviews</h2>
+  {% for review in reviews %}
+    <div>
+      <p><strong>{{ review.username }}</strong> — overall {{ review.overall }}/5</p>
+      <p>{{ review.body }}</p>
+      {% if review.ordered %}<p>Ordered: {{ review.ordered }}</p>{% endif %}
+      <p>Would return: {{ "Yes" if review.would_return else "No" }}</p>
+    </div>
+  {% endfor %}
 </body>
 </html>
