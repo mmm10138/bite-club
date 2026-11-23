@@ -6,6 +6,8 @@ Search the city's restaurants, see their official health grade, and read what th
 
 Built solo for NYU Tandon LeetCode Bootcamp, Fall 2026.
 
+**Live**: https://https://bite-club-pt95.onrender.com/
+
 The assignment suggested the Yelp Fusion API. Yelp has since moved it to paid plans with a free trial. I pickee NYC Open Data because it costs nothing, and it had the Department of Health letter grade for every restaurant in the city.
 
 The trade-off is that it has no ratings nor photos. That turned out to suit the project. With no Yelp score to sit beside it, the Bite Club community rating is the only rating on the page.
