@@ -1,4 +1,4 @@
-#Bite Club 
+## Bite Club 
 
 Restaurant discovery and reviews for New York. 
 
@@ -11,7 +11,7 @@ The assignment suggested the Yelp Fusion API. Yelp has since moved it to paid pl
 The trade-off is that it has no ratings nor photos. That turned out to suit the project. With no Yelp score to sit beside it, the Bite Club community rating is the only rating on the page.
 
 
-##What it does
+## What it does
 - **Search** restaurants by keyword across roughly 27,000 NYC establishments
 - **Restaurant pages** with cuisine, address, phone and the city's health grade
 - **Reviews** rated on four axes: food, atmosphere, service, overall, what you ordered, when
